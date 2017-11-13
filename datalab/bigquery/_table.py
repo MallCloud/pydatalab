@@ -124,12 +124,13 @@ class Table(object):
     Raises:
       Exception if the name is invalid.
     """
-    if context is None:
-      context = datalab.context.Context.default()
+#     if context is None:
+#       context = datalab.context.Context.default()
     self._context = context
-    self._api = _api.Api(context)
-    self._name_parts = _utils.parse_table_name(name, self._api.project_id)
-    self._full_name = '%s:%s.%s%s' % self._name_parts
+    self._api = _api.Api()
+#     self._name_parts = _utils.parse_table_name(name)
+    self._name_parts = name
+#     self._full_name = '%s:%s.%s%s' % self._name_parts
     self._info = None
     self._cached_page = None
     self._cached_page_index = 0

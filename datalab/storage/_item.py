@@ -67,7 +67,7 @@ class ItemMetadata(object):
 class Item(object):
   """Represents a Cloud Storage object within a bucket."""
 
-  def __init__(self, bucket, key, info=None, context=None):
+  def __init__(self, key, info=None, context=None):
     """Initializes an instance of an Item.
 
     Args:
@@ -78,11 +78,11 @@ class Item(object):
           project id or credentials are unspecified, the default ones configured at the global
           level are used.
     """
-    if context is None:
-      context = datalab.context.Context.default()
-    self._context = context
-    self._api = _api.Api(context)
-    self._bucket = bucket
+#     if context is None:
+#       context = datalab.context.Context.default()
+#     self._context = context
+    self._api = _api.Api()
+    self._bucket = None
     self._key = key
     self._info = info
 

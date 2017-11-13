@@ -28,23 +28,23 @@ class Api(object):
   """A helper class to issue Storage HTTP requests."""
 
   # TODO(nikhilko): Use named placeholders in these string templates.
-  _ENDPOINT = 'https://www.googleapis.com/storage/v1'
-  _DOWNLOAD_ENDPOINT = 'https://www.googleapis.com/download/storage/v1'
+  _ENDPOINT = 'http://35.202.46.161:8001/cs'
+  _DOWNLOAD_ENDPOINT = 'http://35.202.46.161:8001/cs'
   _UPLOAD_ENDPOINT = 'https://www.googleapis.com/upload/storage/v1'
   _BUCKET_PATH = '/b/%s'
-  _OBJECT_PATH = '/b/%s/o/%s'
+  _OBJECT_PATH = '/%s'
   _OBJECT_COPY_PATH = '/b/%s/o/%s/copyTo/b/%s/o/%s'
 
   _MAX_RESULTS = 100
 
-  def __init__(self, context):
+  def __init__(self):
     """Initializes the Storage helper with context information.
 
     Args:
       context: a Context object providing project_id and credentials.
     """
-    self._credentials = context.credentials
-    self._project_id = context.project_id
+#     self._credentials = context.credentials
+#     self._project_id = context.project_id
 
   @property
   def project_id(self):
@@ -140,9 +140,9 @@ class Api(object):
       if byte_count is not None:
         header += '%d' % byte_count
       headers['Range'] = header
-    url = Api._DOWNLOAD_ENDPOINT + (Api._OBJECT_PATH % (bucket, Api._escape_key(key)))
+    url = Api._DOWNLOAD_ENDPOINT + (Api._OBJECT_PATH % (Api._escape_key(key)))
     return datalab.utils.Http.request(url, args=args, headers=headers,
-                                      credentials=self._credentials, raw_response=True)
+                                      raw_response=True)
 
   def object_upload(self, bucket, key, content, content_type):
     """Writes text content to the object.

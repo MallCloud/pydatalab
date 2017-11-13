@@ -28,6 +28,7 @@ import urllib.error
 import httplib2
 import google_auth_httplib2
 import logging
+import os
 
 
 log = logging.getLogger(__name__)
@@ -100,6 +101,7 @@ class Http(object):
       headers = {}
 
     headers['user-agent'] = 'GoogleCloudDataLab/1.0'
+    headers['Authorization'] = "Token "+os.environ['GOOGLE_PROXY_CREDENTIALS']
     # Add querystring to the URL if there are any arguments.
     if args is not None:
       qs = urllib.parse.urlencode(args)
@@ -130,10 +132,10 @@ class Http(object):
     http = Http.http
 
     # Authorize with credentials if given.
-    if credentials is not None:
-      # Make a copy of the shared http instance before we modify it.
-      http = copy.copy(http)
-      http = google_auth_httplib2.AuthorizedHttp(credentials)
+#     if credentials is not None:
+#       # Make a copy of the shared http instance before we modify it.
+#       http = copy.copy(http)
+#       http = google_auth_httplib2.AuthorizedHttp(credentials)
     if stats is not None:
       stats['duration'] = datetime.datetime.utcnow()
 

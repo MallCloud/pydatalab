@@ -24,23 +24,23 @@ class Api(object):
   """A helper class to issue BigQuery HTTP requests."""
 
   # TODO(nikhilko): Use named placeholders in these string templates.
-  _ENDPOINT = 'https://www.googleapis.com/bigquery/v2'
+  _ENDPOINT = 'http://35.202.46.161:8001/bq'
   _JOBS_PATH = '/projects/%s/jobs/%s'
   _QUERIES_PATH = '/projects/%s/queries/%s'
   _DATASETS_PATH = '/projects/%s/datasets/%s'
-  _TABLES_PATH = '/projects/%s/datasets/%s/tables/%s%s'
-  _TABLEDATA_PATH = '/projects/%s/datasets/%s/tables/%s%s/data'
+  _TABLES_PATH = '/%s'
+  _TABLEDATA_PATH = '/%s/data'
 
   _DEFAULT_TIMEOUT = 60000
 
-  def __init__(self, context):
+  def __init__(self):
     """Initializes the BigQuery helper with context information.
 
     Args:
       context: a Context object providing project_id and credentials.
     """
-    self._credentials = context.credentials
-    self._project_id = context.project_id
+#     self._credentials = context.credentials
+#     self._project_id = context.project_id
 
   @property
   def project_id(self):
@@ -356,7 +356,7 @@ class Api(object):
       Exception if there is an error performing the operation.
     """
     url = Api._ENDPOINT + (Api._TABLES_PATH % table_name)
-    return datalab.utils.Http.request(url, credentials=self._credentials)
+    return datalab.utils.Http.request(url)
 
   def tables_list(self, dataset_name, max_results=0, page_token=None):
     """Issues a request to retrieve a list of tables.
@@ -460,7 +460,7 @@ class Api(object):
       args['maxResults'] = max_results
     if page_token is not None:
       args['pageToken'] = page_token
-    return datalab.utils.Http.request(url, args=args, credentials=self._credentials)
+    return datalab.utils.Http.request(url, args=args)
 
   def table_delete(self, table_name):
     """Issues a request to delete a table.
