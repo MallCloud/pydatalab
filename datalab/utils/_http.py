@@ -101,7 +101,7 @@ class Http(object):
       headers = {}
 
     headers['user-agent'] = 'GoogleCloudDataLab/1.0'
-    headers['Authorization'] = "Token "+os.environ['GOOGLE_PROXY_CREDENTIALS']
+    headers['Authorization'] = "Token "+os.environ['SHORTESTTRACK_API_TOKEN']
     # Add querystring to the URL if there are any arguments.
     if args is not None:
       qs = urllib.parse.urlencode(args)
